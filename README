@@ -1,23 +1,23 @@
-Example:
+Fork of the standard auto_complete plugin to create auto complete text fields that
+can be repeated more than once a single form.
 
-  # Controller
-  class BlogController < ApplicationController
-    auto_complete_for :post, :title
-  end
+A "text_field_with_auto_complete" method is made available to form_for and fields_for that:
+- Insures unique id's for <input> and <div> tags
+- Uses the object name from the surrounding call to form_for or fields_for so attribute
+mass assignment will work as usual
+- Works with the same server side controller method, auto_complete_for, as usual
 
-  # View
-  <%= text_field_with_auto_complete :post, title %>
+See: http://patshaughnessy.net/repeated_auto_complete for details.
 
-By default, auto_complete_for limits the results to 10 entries,
-and sorts by the given field.
+Example
+=======
 
-auto_complete_for takes a third parameter, an options hash to
-the find method used to search for the records:
+<% for person in @group.people %>
+  <% auto_complete_fields_for "group[person_attributes][]", person do |person_form| %>
+    <p>
+      Person <%= person_form.label :name %><br/>
+      <%= person_form.text_field_with_auto_complete :person, :name, {}, {:method => :get }  %> 
+  <% end %>
+<% end %>
 
-  auto_complete_for :post, :title, :limit => 15, :order => 'created_at DESC'
-
-For more examples, see script.aculo.us:
-* http://script.aculo.us/demos/ajax/autocompleter
-* http://script.aculo.us/demos/ajax/autocompleter_customized
-
-Copyright (c) 2007 David Heinemeier Hansson, released under the MIT license   
+Copyright (c) 2009 [Pat Shaughnessy], released under the MIT license
