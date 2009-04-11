@@ -23,7 +23,8 @@ Example:
   <% auto_complete_fields_for "group[person_attributes][]", person do |person_form| %>
     <p>
       Person <%= person_form.label :name %><br/>
-      <%= person_form.text_field_with_auto_complete :person, :name, {}, {:method => :get }  %> 
+      <%= person_form.text_field_with_auto_complete :person, :name, {}, {:method => :get }  %>
+    </p>
   <% end %>
 <% end %>
 
