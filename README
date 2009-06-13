@@ -18,7 +18,7 @@ id attributes
 - Uses the object name from the surrounding call to form_for or fields_for so attribute
 mass assignment will work as usual
 - Works with the same server side controller method, auto_complete_for, as usual
-- Support nested attributes in Rails 2.3
+- Supports nested attributes in Rails 2.3
 
 form.text_field_with_auto_complete works the same as the original text_field_with_auto_complete macro,
 except it does not take the object as a parameter.

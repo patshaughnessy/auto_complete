@@ -1,4 +1,4 @@
-module AutoCompleteFormBuilder
+module AutoCompleteFormBuilderHelper
 
   def class_name
     "#{@object.class.to_s.underscore}"
