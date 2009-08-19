@@ -50,6 +50,8 @@ module AutoCompleteMacrosHelper
   #                                  The expression should take two variables: element and value.
   #                                  Element is a DOM element for the field, value
   #                                  is the value selected by the user.
+  # <tt>:parameters</tt>:: 	     To send additional parameters to the server, 
+  #				     add them here in the format: 'field=value&another=value'.
   # <tt>:select</tt>::               Pick the class of the element from which the value for 
   #                                  insertion should be extracted. If this is not specified,
   #                                  the entire element is used.
@@ -69,6 +71,7 @@ module AutoCompleteMacrosHelper
     js_options[:paramName]  = "'#{options[:param_name]}'" if options[:param_name]
     js_options[:frequency]  = "#{options[:frequency]}" if options[:frequency]
     js_options[:method]     = "'#{options[:method].to_s}'" if options[:method]
+    js_options[:parameters]  = "'#{options[:parameters]}'" if options[:parameters]
 
     { :after_update_element => :afterUpdateElement, 
       :on_show => :onShow, :on_hide => :onHide, :min_chars => :minChars }.each do |k,v|
