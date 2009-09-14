@@ -10,14 +10,12 @@ class Person
   end
 end
 
-class AutoCompleteFormHelperTest < Test::Unit::TestCase
+class AutoCompleteFormBuilderHelperTest < Test::Unit::TestCase
 
   include AutoCompleteMacrosHelper
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::FormHelper
-  
-  include AutoCompleteFormHelper
 
   def setup
 
@@ -47,14 +45,13 @@ class AutoCompleteFormHelperTest < Test::Unit::TestCase
   end
 
   def test_compare_macro_to_fields_for
-    standard_auto_complete_html =
-      text_field_with_auto_complete :person, :name
-  
+    standard_auto_complete_html = text_field_with_auto_complete(:person, :name)
+
     _erbout = ''
     fields_for('group[person_attributes][]', @person) do |f|
       _erbout.concat f.text_field_with_auto_complete(:name)
     end
-  
+
     assert_equal standard_auto_complete_html,
       _erbout.gsub(/group\[person_attributes\]\[\]/, 'person').gsub(/person_[0-9]+_name/, 'person_name').gsub(/paramName:'person\[name\]'/, '')
   end

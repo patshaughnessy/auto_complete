@@ -2,9 +2,6 @@ require File.expand_path(File.join(File.dirname(__FILE__), '../../../../test/tes
 
 # Note: These tests require nested attributes (Rails 2.3 or greater).
 
-config = YAML::load(IO.read(File.dirname(__FILE__) + '/database.yml'))
-ActiveRecord::Base.establish_connection(config['test'])
-
 Object.const_set("ParentTestModel", Class.new(ActiveRecord::Base))
 Object.const_set("ChildTestModel", Class.new(ActiveRecord::Base))
 
@@ -31,7 +28,6 @@ class AutoCompleteNestedAttributesTest < Test::Unit::TestCase
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::FormHelper
-  include AutoCompleteFormHelper
 
   def setup
 
