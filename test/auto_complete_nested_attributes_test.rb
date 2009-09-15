@@ -91,7 +91,7 @@ class AutoCompleteNestedAttributesTest < Test::Unit::TestCase
       assert _erbout.index("value=\"Name of child model #{i}\"")
     end
   end
-  
+
   def test_sanitized_object_name
     fields_for @parent do |parent_form|
       assert_equal 'parent_test_model',
@@ -116,13 +116,28 @@ class AutoCompleteNestedAttributesTest < Test::Unit::TestCase
     end
   end
 
-  def test_index_option
+  def test_child_index_fields_for_option
     _erbout = ''
-    fields_for @parent, { :index => 5678 } do |parent_form|
+    fields_for @parent, { :child_index => 5678 } do |parent_form|
       _erbout.concat parent_form.text_field_with_auto_complete(:name, {}, { :method => :get })
       assert _erbout.index('parent_test_model_5678_name')
     end
   end
-  
+
+  def test_child_index_completion_option
+    _erbout = ''
+    fields_for @parent do |parent_form|
+      _erbout.concat parent_form.text_field_with_auto_complete(:name, {}, { :method => :get, :child_index => 1234 })
+      assert _erbout.index('parent_test_model_1234_name')
+    end
+  end
+
+  def test_child_index_completion_option_overrides_fields_for_option
+    _erbout = ''
+    fields_for @parent, { :child_index => 5678 } do |parent_form|
+      _erbout.concat parent_form.text_field_with_auto_complete(:name, {}, { :method => :get, :child_index => 1234 })
+      assert _erbout.index('parent_test_model_1234_name')
+    end
+  end
 
 end

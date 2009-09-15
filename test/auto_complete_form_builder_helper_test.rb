@@ -96,4 +96,28 @@ class AutoCompleteFormBuilderHelperTest < Test::Unit::TestCase
     assert _erbout.index("[]")
   end
 
+  def test_child_index_fields_for_option
+    _erbout = ''
+    fields_for 'group[person_attributes][]', @person, { :child_index => 5678 } do |f|
+      _erbout.concat f.text_field_with_auto_complete(:name, {}, { :method => :get })
+      assert _erbout.index('person_5678_name')
+    end
+  end
+
+  def test_child_index_completion_option
+    _erbout = ''
+    fields_for('group[person_attributes][]', @person) do |f|
+      _erbout.concat f.text_field_with_auto_complete(:name, {}, { :method => :get, :child_index => 1234 })
+      assert _erbout.index('person_1234_name')
+    end
+  end
+
+  def test_child_index_completion_option_overrides_fields_for_option
+    _erbout = ''
+    fields_for('group[person_attributes][]', @person, { :child_index => 5678 }) do |f|
+      _erbout.concat f.text_field_with_auto_complete(:name, {}, { :method => :get, :child_index => 1234 })
+      assert _erbout.index('person_1234_name')
+    end
+  end
+
 end

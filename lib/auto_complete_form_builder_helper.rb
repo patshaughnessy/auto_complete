@@ -13,10 +13,12 @@ module AutoCompleteFormBuilderHelper
   end
   
   def text_field_with_auto_complete(method, tag_options = {}, completion_options = {})
-    if is_used_as_nested_attribute?
+    if completion_options[:child_index]
+      unique_object_name = "#{class_name}_#{completion_options[:child_index]}"
+    elsif @options[:child_index]
+      unique_object_name = "#{class_name}_#{@options[:child_index]}"
+    elsif is_used_as_nested_attribute?
       unique_object_name = sanitized_object_name
-    elsif options[:index]
-      unique_object_name = "#{class_name}_#{@options[:index]}"
     else
       unique_object_name = "#{class_name}_#{Object.new.object_id.abs}"
     end
