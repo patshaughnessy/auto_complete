@@ -96,7 +96,8 @@ The "View Mapper" gem will generate scaffolding code that illustrates how to use
 the standard Rails auto_complete plugin in a simple form, or the repeated_auto_complete
 plugin/gem in a complex form.
 
-See: http://pats
+See: http://patshaughnessy.net/2009/10/1/auto_complete-scaffolding
+Or:  http://patshaughnessy.net/2009/11/25/scaffolding-for-auto-complete-on-a-complex-nested-form
 
 
 Copyright (c) 2009 [Pat Shaughnessy], released under the MIT license
