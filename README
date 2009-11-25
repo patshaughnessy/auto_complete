@@ -88,4 +88,15 @@ auto_complete_for :task, :name do | items, params |
 end
 
 
+
+Autocomplete Scaffolding:
+=========================
+
+The "View Mapper" gem will generate scaffolding code that illustrates how to use
+the standard Rails auto_complete plugin in a simple form, or the repeated_auto_complete
+plugin/gem in a complex form.
+
+See: http://pats
+
+
 Copyright (c) 2009 [Pat Shaughnessy], released under the MIT license

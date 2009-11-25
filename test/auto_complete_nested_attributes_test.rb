@@ -1,4 +1,4 @@
-require File.expand_path(File.join(File.dirname(__FILE__), '../../../../test/test_helper')) 
+require 'helper'
 
 # Note: These tests require nested attributes (Rails 2.3 or greater).
 
