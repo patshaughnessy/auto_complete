@@ -31,6 +31,12 @@ class AutoCompleteTest < ActionController::TestCase
         url << options[:action].to_s if options and options[:action]
         url
       end
+
+      class << self
+        def name
+          'test_controller'
+        end
+      end
     end
     @controller = @controller.new
 
