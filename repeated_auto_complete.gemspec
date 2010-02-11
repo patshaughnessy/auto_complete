@@ -5,22 +5,21 @@
 
 Gem::Specification.new do |s|
   s.name = %q{repeated_auto_complete}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Pat Shaughnessy"]
-  s.date = %q{2009-11-25}
+  s.date = %q{2010-02-10}
   s.description = %q{auto_complete plugin refactored to handle complex forms and named scopes}
   s.email = %q{pat@patshaughnessy.net}
   s.extra_rdoc_files = [
-    "README"
+    "README.rdoc"
   ]
   s.files = [
     ".gitignore",
-     "README",
+     "README.rdoc",
      "Rakefile",
      "VERSION",
-     "init.rb",
      "lib/auto_complete.rb",
      "lib/auto_complete_form_builder_helper.rb",
      "lib/auto_complete_macros_helper.rb",
