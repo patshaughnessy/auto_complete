@@ -32,8 +32,38 @@ class AutoCompleteFormBuilderHelperTest < Test::Unit::TestCase
     @controller = controller_class.new
     
   end
-  
-  def test_two_auto_complete_fields_have_different_ids
+
+  def test_auto_complete_field_in_normal_form_does_not_have_random_id
+    _erbout = ''
+    fields_for(@person) do |f|
+      _erbout = f.text_field_with_auto_complete(:name)
+    end
+    assert _erbout.index('id="person_name"')
+  end
+
+  def test_compare_to_macro_in_normal_form
+    standard_auto_complete_html = text_field_with_auto_complete(:person, :name)
+
+    _erbout = ''
+    fields_for(@person) do |f|
+      _erbout.concat f.text_field_with_auto_complete(:name)
+      assert_equal 'person', f.class_name
+    end
+    assert_equal standard_auto_complete_html, _erbout.gsub(/paramName:'person\[name\]'/, '')
+  end
+
+  def test_compare_to_macro_in_normal_form_with_symbol
+    standard_auto_complete_html = text_field_with_auto_complete(:some_class, :name)
+
+    _erbout = ''
+    fields_for(:some_class) do |f|
+      _erbout.concat f.text_field_with_auto_complete(:name)
+      assert_equal 'some_class', f.class_name
+    end
+    assert_equal standard_auto_complete_html, _erbout.gsub(/paramName:'some_class\[name\]'/, '')
+  end
+
+  def test_two_auto_complete_fields_in_nested_form_have_different_ids
     id_attribute_pattern = /id=\"[^\"]*\"/i
     _erbout = ''
     _erbout2 = ''
@@ -44,7 +74,7 @@ class AutoCompleteFormBuilderHelperTest < Test::Unit::TestCase
     assert_equal [], _erbout.scan(id_attribute_pattern) & _erbout2.scan(id_attribute_pattern)
   end
 
-  def test_compare_macro_to_fields_for
+  def test_compare_macro_to_fields_for_in_nested_form
     standard_auto_complete_html = text_field_with_auto_complete(:person, :name)
 
     _erbout = ''
@@ -119,5 +149,4 @@ class AutoCompleteFormBuilderHelperTest < Test::Unit::TestCase
       assert _erbout.index('person_1234_name')
     end
   end
-
 end

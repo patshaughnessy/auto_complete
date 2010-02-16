@@ -1,15 +1,19 @@
 module AutoCompleteFormBuilderHelper
 
   def class_name
-    "#{@object.class.to_s.underscore}"
+    if @object
+      "#{@object.class.to_s.underscore}"
+    else
+      "#{@object_name.to_s.underscore}"
+    end
   end
 
   def sanitized_object_name
-    @object_name.gsub(/\]\[|[^-a-zA-Z0-9:.]/, "_").sub(/_$/, "")
+    @object_name.to_s.gsub(/\]\[|[^-a-zA-Z0-9:.]/, "_").sub(/_$/, "")
   end
 
   def is_used_as_nested_attribute?
-    /\[#{class_name.pluralize}_attributes\]\[[0-9]+\]/.match @object_name
+    /\[#{class_name.pluralize}_attributes\]\[[0-9]+\]/.match @object_name.to_s
   end
   
   def text_field_with_auto_complete(method, tag_options = {}, completion_options = {})
@@ -18,6 +22,8 @@ module AutoCompleteFormBuilderHelper
     elsif @options[:child_index]
       unique_object_name = "#{class_name}_#{@options[:child_index]}"
     elsif is_used_as_nested_attribute?
+      unique_object_name = sanitized_object_name
+    elsif !(@object_name.to_s =~ /\[\]$/)
       unique_object_name = sanitized_object_name
     else
       unique_object_name = "#{class_name}_#{Object.new.object_id.abs}"
