@@ -1,4 +1,4 @@
-require 'helper'
+require File.expand_path(File.dirname(__FILE__) + '/helper')
 
 ActionController::Routing::Routes.draw do |map|
   map.connect  ':controller/:action/:id'

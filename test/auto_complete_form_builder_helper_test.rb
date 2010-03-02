@@ -1,4 +1,4 @@
-require 'helper'
+require File.expand_path(File.dirname(__FILE__) + '/helper')
 
 class Person
   attr_accessor :name, :id
