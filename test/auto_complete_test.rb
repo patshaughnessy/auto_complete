@@ -40,6 +40,9 @@ class AutoCompleteTest < ActionController::TestCase
     end
     @controller = @controller.new
 
+    ActiveRecord::Base.connection.create_table :some_models, :force => true do |table|
+      table.column :title, :string
+    end
     Object.const_set("SomeModel", Class.new(ActiveRecord::Base)) unless Object.const_defined?("SomeModel")
 
     @request = ActionController::TestRequest.new
@@ -71,13 +74,13 @@ class AutoCompleteTest < ActionController::TestCase
   end
   
   def test_auto_complete_result
-    result = [ { :title => 'test1'  }, { :title => 'test2'  } ]
+    result = [ SomeModel.new(:title => 'test1'), SomeModel.new(:title => 'test2') ]
     assert_equal %(<ul><li>test1</li><li>test2</li></ul>), 
       auto_complete_result(result, :title)
     assert_equal %(<ul><li>t<strong class=\"highlight\">est</strong>1</li><li>t<strong class=\"highlight\">est</strong>2</li></ul>), 
       auto_complete_result(result, :title, "est")
     
-    resultuniq = [ { :title => 'test1'  }, { :title => 'test1'  } ]
+    resultuniq = [ SomeModel.new(:title => 'test1'), SomeModel.new(:title => 'test1') ]
     assert_equal %(<ul><li>t<strong class=\"highlight\">est</strong>1</li></ul>), 
       auto_complete_result(resultuniq, :title, "est")
   end
