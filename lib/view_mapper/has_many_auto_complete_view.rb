@@ -63,7 +63,7 @@ module ViewMapper
 
     def auto_complete_attributes_for_model(model_info)
       model_info.text_fields.collect do |text_field|
-        { :model_name => model_info.name.downcase, :text_field => text_field }
+        { :model_name => model_info.name.underscore, :text_field => text_field }
       end
     end
 

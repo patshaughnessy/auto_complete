@@ -1,4 +1,4 @@
-require 'helper'
+require File.expand_path(File.dirname(__FILE__) + '/../helper')
 require 'shoulda'
 require 'mocha'
 require 'rails_generator'
@@ -311,6 +311,25 @@ class HasManyAutoCompleteViewTest < Test::Unit::TestCase
       result = ERB.new(template_file.read, nil, '-').result(binding)
       expected_file = File.open(File.join(File.dirname(__FILE__), "expected_templates/create_parents.rb"))
       assert_equal expected_file.read, result
+    end
+  end
+
+
+  context "A view_for generator instantiated for a test model with a camel case name" do
+    setup do
+      setup_test_model
+      setup_parent_test_model
+      SomeOtherModel.class_eval do
+        has_many :testies
+      end
+      stub_warnings
+      @gen = new_generator_for_test_model('view_for', ['--view', 'has_many_auto_complete'], 'some_other_model')
+    end
+
+    should "find the text field attributes" do
+      assert_equal [
+        {:model_name=>"some_other_model", :text_field=>"name" }
+      ], @gen.find_auto_complete_attributes
     end
   end
 
