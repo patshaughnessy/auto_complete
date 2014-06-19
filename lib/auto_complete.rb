@@ -34,7 +34,7 @@ module AutoComplete
       define_method("auto_complete_for_#{object}_#{method}") do
         model = object.to_s.camelize.constantize
         find_options = { 
-          :conditions => [ "LOWER(#{model.quoted_table_name}.#{method}) LIKE ?", '%' + params[object][method].downcase + '%' ],
+          :conditions => [ "LOWER(#{model.quoted_table_name}.#{method}) LIKE ?", '%' + params[object][method].downcase.gsub(/\\/,"\\\\\\\\") + '%' ],
           :order => "#{model.quoted_table_name}.#{method} ASC",
           :limit => 10 }.merge!(options)
         

@@ -101,6 +101,13 @@ class AutoCompleteTest < ActionController::TestCase
     assert_equal 10, default_auto_complete_find_options[:limit]
     assert_equal ["LOWER(\"some_models\".some_field) LIKE ?", "%some_value%"], default_auto_complete_find_options[:conditions]
   end
+  
+  # auto_complete_for :some_model, :some_field but value contains slashes
+  def test_default_auto_complete_for_value_with_slashes
+    get :auto_complete_for_some_model_some_field, :some_model => { :some_field => "some_value\\some_other_value" }
+    default_auto_complete_find_options = @controller.items.proxy_options
+    assert_equal ["LOWER(\"some_models\".some_field) LIKE ?", "%some_value\\\\some_other_value%"], default_auto_complete_find_options[:conditions]
+  end
 
   # auto_complete_for :some_model, :some_other_field do |items, params|
   #   items.scoped( { :conditions => [ "a_third_field = ?", params['some_model']['a_third_field'] ] })
